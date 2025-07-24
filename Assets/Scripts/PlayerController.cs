@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -29,12 +28,29 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(ShootRoutine());
     }
 
+    // private void Update()
+    // {
+    //     movement.x = Input.GetAxisRaw("Horizontal");
+    //     movement.y = Input.GetAxisRaw("Vertical");
+
+    //     movement = movement.normalized;
+    // }
+
     private void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            Vector3 touchWorldPos = Camera.main.ScreenToWorldPoint(touch.position);
+            touchWorldPos.z = 0f;
 
-        movement = movement.normalized;
+            Vector2 direction = (touchWorldPos - transform.position).normalized;
+            movement = direction;
+        }
+        else
+        {
+            movement = Vector2.zero;
+        }
     }
 
     private void FixedUpdate()

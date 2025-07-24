@@ -32,7 +32,7 @@ public class BulletController : MonoBehaviour
         if (myCollider != null && other != null)
         {
             Physics2D.IgnoreCollision(myCollider, other, true);
-            StartCoroutine(EnableCollitionAfferDelay(myCollider, other, 1f));
+            StartCoroutine(EnableCollitionAfferDelay(myCollider, other, 0.5f));
         }
     }
     private IEnumerator EnableCollitionAfferDelay(Collider2D myCollider, Collider2D other, float delay)
@@ -45,7 +45,7 @@ public class BulletController : MonoBehaviour
     {
         audioManager.PlaySFX(audioManager.bounce);
         ++_bulletBounciness;
-        if (_bulletBounciness == 15)
+        if (_bulletBounciness == 10)
         {
             Destroy(gameObject);
         }
