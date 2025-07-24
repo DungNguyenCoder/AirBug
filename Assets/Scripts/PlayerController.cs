@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _flySpeed;
-
     [SerializeField] private GameObject bulletPrefabs;
     private float fireTimeDelay = 1f;
     private float bulletAngleRange = 180f;
@@ -15,10 +14,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private Vector2 movement;
 
+    private AudioManager audioManager;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _rb.gravityScale = 0f;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Start()
@@ -67,6 +69,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Debug.Log("va cham");
+            audioManager.PlaySFX(audioManager.die);
             FindObjectOfType<GameManager>().ShowEndGame();
         }
     }

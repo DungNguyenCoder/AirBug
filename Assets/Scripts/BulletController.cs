@@ -10,10 +10,12 @@ public class BulletController : MonoBehaviour
     private Vector2 _direction;
     private Rigidbody2D _rb;
     private Collider2D _collider;
+    private AudioManager audioManager;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
     private void Start()
     {
@@ -41,6 +43,7 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        audioManager.PlaySFX(audioManager.bounce);
         ++_bulletBounciness;
         if (_bulletBounciness == 15)
         {
